@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Письмо для моей любви</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #5a3d3d;
+            padding: 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ff6b6b;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #ff8e8e;
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
+
+        .envelope.open:before {
+            transform: rotate(180deg);
+            top: -110px;
+        }
+
+        .envelope-content {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            background: #fff9f9;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .heart {
+            width: 40px;
+            height: 40px;
+            background: #ff6b6b;
+            position: relative;
+            transform: rotate(45deg);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart:before {
+            top: -20px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -20px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: rotate(45deg) scale(1); }
+            25% { transform: rotate(45deg) scale(1.1); }
+            50% { transform: rotate(45deg) scale(1); }
+            75% { transform: rotate(45deg) scale(1.1); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+
+        .letter {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease;
+            display: none;
+        }
+
+        .letter.show {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .letter:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ffc3c3;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .hearts {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hearts span {
+            font-size: 1.5rem;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .hearts span:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .hearts span:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .letter-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .letter-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .opening {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #ff6b6b;
+            text-align: center !important;
+        }
+
+        .closing {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            text-align: center !important;
+            margin-top: 30px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+        }
+
+        .photo-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px dashed #ffc3c3;
+        }
+
+        .photo-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        .our-photo {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 5px solid #ff8e8e;
+            transition: transform 0.3s;
+        }
+
+        .our-photo:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-caption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #ff6b6b;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .heart-float:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .heart-float:nth-child(2) {
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        .heart-float:nth-child(3) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .heart-float:nth-child(4) {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .heart-float:nth-child(5) {
+            left: 80%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .instruction {
+            text-align: center;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .letter {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .letter-text {
+                font-size: 1rem;
+            }
+            
+            .envelope-wrapper {
+                width: 280px;
+                height: 190px;
+            }
+            
+            .envelope:before {
+                border-left: 140px solid transparent;
+                border-right: 140px solid transparent;
+                border-top: 95px solid #ff8e8e;
+            }
+            
+            .envelope.open:before {
+                top: -95px;
+            }
+            
+            .photo-title {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="envelope-content">
+                    <div class="heart"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instruction">Нажми на конверт, чтобы открыть письмо</div>
+        
+        <div class="letter">
+            <div class="letter-content">
+                <div class="header">
+                    <h1>Моей любимой</h1>
+                    <div class="hearts">
+                        <span>💖</span>
+                        <span>❤️</span>
+                        <span>😘</span>
+                    </div>
+                </div>
+                
+                <div class="letter-text">
+                    <p class="opening">Привет любовь всей моей жизни😘❤️💖 моя душа мое спокойствие, мне очень сильно повезло с тобой🥺💖</p>
+                    
+                    <p>Сейчас время 1:43 ты уже спишь я решил сейчас написать тебе это письмо, я тебя полюбил с первого взгляда как увидел тебя сразу почувствовал тепло глядя на твои зеленые глаза я понял в тот момент вот они и вот она та которая я готов чтоб не случилось и в бедности и в радости любить и заботиться я тебе обещаю сделаю все что в моих силах чтоб ты моя маленькая девочка никогда не нуждалась в чем то, как бы не было работая руками, ногами, головой ИН ША АЛЛАХ у на все получится, мы с тобой через не малое прошли и проблем еще больше поднимемся вместе да самых вершин рука об руку дай Аллах что мы больше не разлучились как бы не было как бы не поднялся я тебя не поменяю никогда ни на кого ты единственная кто просыпаясь о ком я думаю и перед сном тоже я всегда о тебе думаю моя душа просто я тебя люблю одним темпом моя любовь она не как мотивация что вспышкой горит сильно и постепенно подыхает это не про меня и не какие то качели любви, моя любовь к тебе она как огонь как вечный огонь который ничто и никогда не потушит, я тебя люблю ради Аллаха люблю когда злюсь люблю когда нервничаю люблю когда боюсь и когда хорошее настроение в хорошие дни я тебя всегда люблю даже через годы буду любить тебя больше чес детей больше чем внуков и их сыновей ты половина меня и всегда им будешь люблю смотреть когда ты спишь люблю смотреть когда ты ешь даже полюбил когда ты ешь так как мне не нравился потому что понял что люблю все что тебя делает счастливее, пока что из меня не тот кто тебе на все 100 достоин но я буду стараться стать тем кто сможет тебя осчастливить мои мысли не имеют конца, потому что я всегда тобой горю, мне очень не хватает тебя, мне одинока и жизнь не имеет смысла без тебя, мои самы счастливые дни были с тобой мой цветочек🥺 очень тебя жду💖💖💖</p>
+                    
+                    <p>не болей пожалуйста никогда моя душа молюсь чтоб я вместо тебя болел и за твое здоровье молюсь, никогда не сдамся стараться к лучшему, потому что пока ты рядом есть для кого стараться и моя миссия в этой жизни мое предназначение делать тебя счастливым, я очень хочу чтоб ты и моя семья понимали друг друга имею ввиду с мамой чтоб нашли общий язык, и все же чтоб не случилась я тебя не дам в обиду всегда на твоей стороне и ты пожалуйста постарайся поладить и может даже ели что-то случится это жизнь и что-то тебе не понравится ты пожалуйста не торопись с эмоциями моя душа поговори со мной и я решу сам с семьей солнышко ты не пугайся малыш это я так просто заранее пишу чтоб наверняка, это жизнь в дальнейшем всякое может быть но дай Аллах чтоб все хорошо было, даже сейчас когда ты еще не приехала тебя любят моя душа потому что знают что я не какая то креветка и не выберу кого попало, в общем малыш тебя люблю не только я и вся моя семья, ИН ША АЛЛАХ у нас будут дети маленькие будут бегать прыгать дедушка их будет сильно любить больше меня даже 😂 бабушки тоже 😅 мама говорит иногда что когда перед папой говорит Алина русская папа на них кричит нет она не русская не говорите так 😂 приедешь познакомишься и узнаешь солнышко моя мама тебе вторая мама а папа тебе будет как родной это даже без сомнений может ты ждала другое письмо, поэтому не судите строго 🥺 я никогда не устану писать и говорить тебе что люблю тебя в этом письме я разрешил себе написать что думаю и какие мысли у меня может в жизни я тебе не так много говорю что люблю потому что не хочу обесценить это слово и хочу показать любовь не словами а на деле, все что делаю это для тебя и для нас в будущем,</p>
+                    
+                    <p class="closing">ЛЮБЛЮ ТЕБЯ МОЯ КОШЕЧКА ❤️❤️❤️</p>
+                    
+                    <div class="signature">
+                        <p>с любовью ТВОЙ ПАЙЗАЛЫЫЫ😅 ❤️❤️❤️💖💖💖😘😘😘</p>
+                    </div>
+                    
+                    <div class="photo-section">
+                        <div class="photo-title">Наше счастье</div>
+                        <img src="101.jpeg" alt="Наша фотография" class="our-photo">
+                        <div class="photo-caption">Мы вместе - и это самое главное ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="floating-hearts">
+            <div class="heart-float">❤️</div>
+            <div class="heart-float">💖</div>
+            <div class="heart-float">😘</div>
+            <div class="heart-float">❤️</div>
+            <div class="heart-float">💖</div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const envelope = document.querySelector('.envelope');
+            const letter = document.querySelector('.letter');
+            
+            // Открытие конверта при клике
+            envelope.addEventListener('click', function() {
+                envelope.classList.add('open');
+                
+                // Показываем письмо с задержкой
+                setTimeout(function() {
+                    letter.classList.add('show');
+                    
+                    // Плавная прокрутка к письму
+                    letter.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 800);
+            });
+            
+            // Создаем дополнительные плавающие сердца
+            function createFloatingHearts() {
+                const container = document.querySelector('.floating-hearts');
+                const emojis = ['❤️', '💖', '😘', '💕', '🥰'];
+                
+                for (let i = 0; i < 10; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart-float');
+                    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+                    container.appendChild(heart);
+                }
+            }
+            
+            createFloatingHearts();
+        });
+    </script>
+</body>
+</html>
